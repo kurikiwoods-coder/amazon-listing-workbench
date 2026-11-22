@@ -1,0 +1,27 @@
+[Unit]
+Description=Listing Studio Workbench
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=listing-workbench
+Group=listing-workbench
+WorkingDirectory=/opt/listing-workbench
+Environment=LISTING_DB=/var/lib/listing-workbench/workbench.sqlite3
+Environment=LISTING_SEED_DEMO=0
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=PLAYWRIGHT_BROWSERS_PATH=/opt/listing-workbench/browsers
+EnvironmentFile=-/etc/listing-workbench/workbench.env
+ExecStart=/opt/listing-workbench/.venv/bin/python -m backend.serve --host 127.0.0.1 --port 8000
+Restart=on-failure
+RestartSec=3
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+NoNewPrivileges=true
+ReadWritePaths=/var/lib/listing-workbench
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

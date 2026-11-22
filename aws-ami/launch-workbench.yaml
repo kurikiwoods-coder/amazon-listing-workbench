@@ -1,0 +1,80 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Launch a private Listing Studio workbench accessed through Systems Manager.
+Parameters:
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+    Description: Select a subnet in the specified VPC with outbound access to Systems Manager.
+  WorkbenchAmi:
+    Type: String
+    AllowedPattern: '^ami-[a-f0-9]+$'
+    Description: The private Listing Studio AMI ID built in this AWS Region.
+  InstanceType:
+    Type: String
+    Default: t3.medium
+  AssignPublicIp:
+    Type: String
+    AllowedValues: ['true', 'false']
+    Default: 'true'
+    Description: Use false in a subnet with NAT or the required VPC endpoints.
+Conditions:
+  PublicIp: !Equals [!Ref AssignPublicIp, 'true']
+Resources:
+  WorkbenchRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - !Sub 'arn:${AWS::Partition}:iam::aws:policy/AmazonSSMManagedInstanceCore'
+  WorkbenchProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles: [!Ref WorkbenchRole]
+  WorkbenchSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Listing Studio outbound HTTPS for Systems Manager and configured data sources.
+      VpcId: !Ref VpcId
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+  WorkbenchLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateData:
+        ImageId: !Ref WorkbenchAmi
+        InstanceType: !Ref InstanceType
+        MetadataOptions:
+          HttpEndpoint: enabled
+          HttpTokens: required
+          HttpPutResponseHopLimit: 1
+        IamInstanceProfile:
+          Name: !Ref WorkbenchProfile
+        NetworkInterfaces:
+          - DeviceIndex: 0
+            AssociatePublicIpAddress: !If [PublicIp, true, false]
+            Groups: [!Ref WorkbenchSecurityGroup]
+            SubnetId: !Ref SubnetId
+  Workbench:
+    Type: AWS::EC2::Instance
+    Properties:
+      LaunchTemplate:
+        LaunchTemplateId: !Ref WorkbenchLaunchTemplate
+        Version: !GetAtt WorkbenchLaunchTemplate.LatestVersionNumber
+      Tags:
+        - Key: Name
+          Value: Listing Studio
+Outputs:
+  InstanceId:
+    Value: !Ref Workbench
+  Port:
+    Value: '8000'
