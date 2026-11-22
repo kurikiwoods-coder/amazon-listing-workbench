@@ -1,0 +1,1 @@
+{"name":"listing-workbench","private":true,"scripts":{"dev":"python -m backend.serve"}}
