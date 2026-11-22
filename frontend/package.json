@@ -1,0 +1,14 @@
+{
+  "name": "listing-workbench-ui",
+  "private": true,
+  "version": "1.3.2",
+  "scripts": {"build": "next build", "dev": "next dev"},
+  "dependencies": {
+    "diff": "8.0.4",
+    "lucide-react": "0.577.0",
+    "next": "15.5.29",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  },
+  "devDependencies": {"@types/node": "^22.19.0", "@types/react": "^19.2.2", "@types/react-dom": "^19.2.2", "typescript": "^5.9.3"}
+}
