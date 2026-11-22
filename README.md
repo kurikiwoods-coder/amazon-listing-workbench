@@ -90,6 +90,8 @@ python -m backend.serve
 
 ## 交给 Alexa Listing 优化 Skill
 
+本工作台配套的 [Amazon Listing 改写 Skill](https://github.com/kurikiwoods-coder/amazon-listing-rewrite-skill) 可以独立使用。将下面导出的 Markdown 或手动粘贴的原文交给 AI，即可按买家问句诊断、改写并复评。仓库内附中文使用说明和示例。
+
 在 ASIN 项目的 **Listing 诊断** 点击 **导出 Alexa Skill 输入**。Markdown 包含当前 Listing 快照、字段核验状态、站点规则、已确认产品事实、买家问句和可复用的诊断引用。在支持 Skills 的工具中，可以和 `amazon-listing-alexa-optimizer` 一起使用。
 
 建议先导入真实 Alexa 问句再诊断。比如营养秤的「第一次是否需要 App 设置」和「设置后日常称量时能否关闭 App 直接读秤屏」应分别找到原文证据。改写后用同一组问句复评，Alexa 的回答和商品卡继续在 Amazon 实测记录。 [Alexa Listing 优化 Skill](https://github.com/liangdabiao/amazon-listing-alexa-optimizer) · [Amazon 对 Alexa for Shopping 的介绍](https://www.aboutamazon.com/news/retail/alexa-for-shopping-ai-assistant)
