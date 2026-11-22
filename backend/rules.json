@@ -1,0 +1,76 @@
+{
+  "version": "us-2026.11-v1",
+  "rubric": [
+    {
+      "key": "questions",
+      "label": "用户问题覆盖度",
+      "weight": 20
+    },
+    {
+      "key": "accuracy",
+      "label": "事实准确性与边界",
+      "weight": 20
+    },
+    {
+      "key": "title",
+      "label": "标题质量",
+      "weight": 10
+    },
+    {
+      "key": "highlights",
+      "label": "Item Highlights",
+      "weight": 5
+    },
+    {
+      "key": "bullets",
+      "label": "五点描述质量",
+      "weight": 15
+    },
+    {
+      "key": "aplus",
+      "label": "A+ 内容质量",
+      "weight": 10
+    },
+    {
+      "key": "attributes",
+      "label": "后台属性质量",
+      "weight": 10
+    },
+    {
+      "key": "keywords",
+      "label": "关键词与语义结构",
+      "weight": 10
+    }
+  ],
+  "coverage_threshold": 70,
+  "profiles": [
+    {
+      "market": "US",
+      "product_type": "non_media",
+      "effective": "2026-07-27",
+      "limits": {
+        "title": 75,
+        "highlights": 125,
+        "bullet_count": 5
+      },
+      "sources": {
+        "title": "https://sellercentral.amazon.com/seller-forums/discussions/t/cd6a14da-a5c7-4f62-b886-7ead97407b3c",
+        "highlights": "https://sellercentral.amazon.com/seller-forums/discussions/t/cd6a14da-a5c7-4f62-b886-7ead97407b3c",
+        "bullet_count": "https://sellercentral.amazon.com/help/hub/reference/external/G10471",
+        "title_symbols": "https://sellercentral.amazon.com/gp/help/external/YTR6SYGFA5E3EQC?mons_sel_locale=en_US"
+      },
+      "title_forbidden": "!$?_{}^¬¦"
+    },
+    {
+      "market": "US",
+      "product_type": "media",
+      "effective": "2026-07-27",
+      "limits": {
+        "bullet_count": 5
+      },
+      "sources": {
+        "bullet_count": "https://sellercentral.amazon.com/help/hub/reference/external/G10471"
+      }
+    }
+  ]
+}
